@@ -67,6 +67,24 @@
         .event-detail-view {
             display: none;
         }
+
+        /* Styles for the custom popup message */
+        .popup-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #22C55E; /* Green-500 */
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            animation: fadeIn 0.3s ease-out forwards;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-blue-50 text-gray-900">
@@ -589,16 +607,21 @@
             <p class="text-lg max-w-3xl mx-auto mb-8 animate-fade-in-up">
                 Curious about our faculty or student initiatives? Fill out the form below, and our IT Department team will reach out to you shortly. We’re here to guide and assist you every step of the way.
             </p>
-            <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-in-up">
-                <input type="text" placeholder="Name" class="p-3 rounded-lg bg-blue-600 border border-blue-500 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <input type="email" placeholder="Email" class="p-3 rounded-lg bg-blue-600 border border-blue-500 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <input type="tel" placeholder="Mobile" class="p-3 rounded-lg bg-blue-600 border border-blue-500 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <button class="md:col-span-2 bg-white hover:bg-blue-100 text-blue-800 font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+            <div class="max-w-2xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in-up">
+                <input type="text" id="enquiry-name" placeholder="Name" class="p-3 rounded-lg bg-blue-600 border border-blue-500 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="email" id="enquiry-email" placeholder="Email" class="p-3 rounded-lg bg-blue-600 border border-blue-500 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <input type="tel" id="enquiry-mobile" placeholder="Mobile" class="p-3 rounded-lg bg-blue-600 border border-blue-500 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <button id="enquiry-submit-btn" class="md:col-span-3 bg-white hover:bg-blue-100 text-blue-800 font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
                     Enquiry Now
                 </button>
             </div>
         </div>
     </section>
+
+    <!-- Custom Popup Message -->
+    <div id="success-popup" class="popup-message">
+        Enquiry Successful! We'll be in touch soon.
+    </div>
 
     <!-- Footer -->
     <footer class="bg-blue-700 p-4 text-center text-blue-100 mt-8">
@@ -828,6 +851,45 @@
                     });
                 });
             }
+
+            // Enquiry form submission and popup logic
+            const enquirySubmitBtn = document.getElementById('enquiry-submit-btn');
+            if (enquirySubmitBtn) {
+                enquirySubmitBtn.addEventListener('click', () => {
+                    const nameInput = document.getElementById('enquiry-name');
+                    const emailInput = document.getElementById('enquiry-email');
+                    const mobileInput = document.getElementById('enquiry-mobile');
+
+                    // Basic validation (you can add more complex validation)
+                    if (nameInput.value.trim() === '' || emailInput.value.trim() === '' || mobileInput.value.trim() === '') {
+                        alert('Please fill in all fields.'); // Using alert for simple client-side validation feedback
+                        return;
+                    }
+
+                    // In a real application, you would send this data to a server here.
+                    // For this client-side example, we'll just simulate success.
+                    console.log('Enquiry Submitted:', {
+                        name: nameInput.value,
+                        email: emailInput.value,
+                        mobile: mobileInput.value
+                    });
+
+                    // Clear the form fields
+                    nameInput.value = '';
+                    emailInput.value = '';
+                    mobileInput.value = '';
+
+                    // Show success popup
+                    const successPopup = document.getElementById('success-popup');
+                    successPopup.style.display = 'block';
+
+                    // Hide popup after a few seconds
+                    setTimeout(() => {
+                        successPopup.style.display = 'none';
+                    }, 3000); // Hide after 3 seconds
+                });
+            }
+
 
             // Show the home page by default when the page loads
             showPage('home-page');
