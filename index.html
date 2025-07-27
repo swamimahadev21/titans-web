@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITANS</title>
+    <!-- Load Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInTop {
+            from { transform: translateY(-30px); opacity: 0; } /* Increased slide distance */
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(30px); opacity: 0; } /* Increased slide distance */
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInBottom {
+            from { transform: translateY(30px); opacity: 0; } /* Increased slide distance */
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInLeft {
+            from { transform: translateX(-30px); opacity: 0; } /* Increased slide distance */
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeInRight {
+            from { transform: translateX(30px); opacity: 0; } /* Increased slide distance */
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Apply custom animations with Tailwind-like names */
+        .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .animate-slide-in-top { animation: slideInTop 0.7s ease-out forwards; }
+        .animate-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+        .animate-fade-in-bottom { animation: fadeInBottom 0.7s ease-out forwards; }
+        .animate-fade-in-left { animation: fadeInLeft 0.7s ease-out forwards; }
+        .animate-fade-in-right { animation: fadeInRight 0.7s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
+
+        /* General body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Hide pages by default, JavaScript will manage visibility */
+        .page-content {
+            display: none;
+            /* Ensure animations re-run when page is shown */
+            animation-fill-mode: backwards; /* Keeps initial state of animation */
+        }
+        /* Hide detail view by default */
+        .event-detail-view {
+            display: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-blue-50 text-gray-900">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-700 p-4 shadow-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <!-- Club Logo in Nav Bar -->
+            <div class="mb-4 md:mb-0 transform hover:scale-105 transition-transform duration-300">
+                <img
+                    src="titanlogo.png"
+                    alt="Titans Trinity IT Club Logo"
+                    class="h-16 w-auto rounded-md"
+                    onerror="this.onerror=null;this.src='https://placehold.co/100x50/1C2B4B/FFFFFF?text=TITANS+LOGO';"
+                />
+            </div>
+            <!-- Navigation Links -->
+            <ul class="flex flex-wrap justify-center gap-4 md:gap-8">
+                <li><button id="nav-home" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Home</button></li>
+                <li><button id="nav-about" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">About Department</button></li>
+                <!-- Removed Gallery Tab -->
+                <li><button id="nav-events" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Events</button></li>
+                <li><button id="nav-alumni" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Alumni</button></li>
+                <li><button id="nav-staff" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Staff</button></li>
+                <li><button id="nav-laboratories" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Laboratories</button></li>
+                <li><button id="nav-newsletter" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Newsletter</button></li>
+                <li><button id="nav-yearbook" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Yearbook</button></li>
+                <li><button id="nav-students-committee" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-blue-100 hover:text-white hover:bg-blue-800">Students Committee</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Content Area -->
+    <main class="container mx-auto p-6 md:p-8">
+        <!-- Home Page -->
+        <section id="home-page" class="page-content text-center py-16 bg-white rounded-xl shadow-2xl mb-8 animate-fade-in">
+            <!-- New Logo Placement on Home Page -->
+            <img
+                src="titanlogo.png"
+                alt="Titans Trinity IT Club Logo"
+                class="h-24 w-auto mx-auto mb-6 animate-scale-in"
+                onerror="this.onerror=null;this.src='https://placehold.co/150x75/1C2B4B/FFFFFF?text=TITANS+LOGO';"
+            />
+            <h2 class="text-5xl font-extrabold text-blue-800 mb-6 animate-slide-in-top">
+                Welcome to <span class="text-blue-600">TITANS</span>
+            </h2>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8 animate-fade-in-up">
+                Empowering the next generation of IT professionals through innovation, collaboration, and learning.
+            </p>
+            
+
+            <!-- HOD's View Section -->
+            <div class="max-w-4xl mx-auto mt-16">
+                <!-- Quote Section -->
+                <div class="bg-blue-700 text-white p-6 rounded-t-xl text-left shadow-lg mb-0.5 animate-slide-in-top">
+                    <p class="text-2xl font-semibold italic">"The journey of a thousand miles begins with one step."</p>
+                </div>
+
+                <!-- HOD Message Section -->
+                <div class="bg-white text-gray-900 p-8 rounded-b-xl shadow-lg text-left flex flex-col md:flex-row items-center md:items-start gap-6 animate-fade-in-bottom">
+                    <div class="flex-shrink-0 animate-scale-in" style="animation-delay: 100ms;">
+                        <img
+                            src="Vilas-Gaikwad.jpg"
+                            alt="Dr. Vilas Gaikwad"
+                            class="h-36 w-auto object-cover shadow-md"
+                            onerror="this.onerror=null;this.src='https://placehold.co/150x150/2C5282/FFFFFF?text=HOD';"
+                        />
+                    </div>
+                    <div class="flex-grow">
+                        <p class="text-lg leading-relaxed mb-4 animate-fade-in-up" style="animation-delay: 200ms;">
+                            "As the Head of the Information Technology Department, I am incredibly proud of the vibrant community we have built at Trinity College. Our commitment is to provide a dynamic and innovative learning environment that prepares our students not just for current industry demands, but for the future challenges and opportunities in the ever-evolving IT landscape. We focus on fostering critical thinking, practical skills, and a passion for technology."
+                        </p>
+                        <p class="text-xl font-semibold mt-6 animate-fade-in-up" style="animation-delay: 400ms;">
+                            Dr. Vilas Shivaji Gaikwad, HoD
+                        </p>
+                        <p class="text-blue-700 text-md animate-fade-in-up" style="animation-delay: 500ms;">
+                            Qualification: PhD.(CSE), M.Tech(CSE), BE(CSE)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Department Page -->
+        <section id="about-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 animate-slide-in-left">About Our Department</h2>
+
+            <div class="bg-blue-50 p-6 rounded-lg mb-8 shadow-inner animate-fade-in-up">
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    The Department of Information Technology at <b>Trinity College of Engineering and Research (TCOER), Pune</b> , established in the academic year 2008–09, has consistently demonstrated its commitment to excellence in teaching, learning, and research within the field of Information Technology.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4" style="animation-delay: 100ms;">
+                    As an autonomous institute offering a B.Tech. program in Information Technology, the department is dedicated to producing industry-ready graduates by providing a curriculum that is both rigorous and aligned with current trends in Software Development, Data Science, Artificial Intelligence, Cyber Security, and Cloud Computing. The program emphasizes hands-on learning through projects, workshops, hackathons, and internships, enabling students to develop practical skills alongside theoretical knowledge.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed" style="animation-delay: 200ms;">
+                    Strategic collaborations with leading IT companies and training partners, through Memorandums of Understanding (MoUs), facilitate enhanced skill development and industry exposure. Moreover, the department places significant emphasis on the holistic development of students, nurturing soft skills, communication abilities, and personality traits while also encouraging aspirations for higher education, competitive examinations, and entrepreneurship.
+                </p>
+            </div>
+
+            <div class="text-lg text-gray-700 leading-relaxed space-y-4 mb-8">
+                <p class="animate-fade-in-up" style="animation-delay: 300ms;">
+                    The department's infrastructure supports its academic mission through state-of-the-art laboratories equipped with high-speed internet and modern software tools, in addition to dedicated project labs and innovation hubs. Students also benefit from access to online learning platforms, electronic resources, and coding practice environments that foster continuous learning. The faculty comprises a team of highly qualified, experienced, and research-oriented educators who are committed to mentoring students and advancing research in trending domains. The department actively promotes research and development through engagement in funded projects, scholarly publications, and technical paper presentations. Both faculty and students are encouraged to contribute to reputed journals and conferences, with a strong focus on solving real-world problems through interdisciplinary approaches.
+                </p>
+                <p class="animate-fade-in-up" style="animation-delay: 400ms;">
+                    The accomplishments of the department's students are noteworthy, with a consistent record of excellent placements in multinational corporations and startups. Students have also earned recognition in national-level competitions, coding contests, and innovation challenges. Alumni of the department have gone on to build successful careers in esteemed organizations across the globe and pursue advanced degrees at premier academic institutions, reflecting the department’s goal of fostering academic and professional excellence.
+                </p>
+            </div>
+
+            <h3 class="text-3xl font-bold text-blue-700 mb-4 animate-slide-in-left" style="animation-delay: 500ms;">Vision of Department</h3>
+            <p class="text-lg text-gray-700 leading-relaxed mb-8 animate-fade-in-up" style="animation-delay: 600ms;">
+                To create skilled information technology professionals with a consistent academics for social well-being.
+            </p>
+
+            <h3 class="text-3xl font-bold text-blue-700 mb-4 animate-slide-in-left" style="animation-delay: 700ms;">Mission of Department</h3>
+            <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed space-y-2">
+                <li class="animate-fade-in-up" style="animation-delay: 800ms;">To inculcate the IT skills in students to be successful in their profession.</li>
+                <li class="animate-fade-in-up" style="animation-delay: 900ms;">To Provide opportunities for overall personality development.</li>
+                <li class="animate-fade-in-up" style="animation-delay: 1000ms;">To train students for demanding technologies to meet industrial needs.</li>
+                <li class="animate-fade-in-up" style="animation-delay: 1100ms;">To supply society with proficient IT professionals.</li>
+            </ul>
+
+            <h3 class="text-3xl font-bold text-blue-700 mb-4 mt-8 animate-slide-in-left" style="animation-delay: 1200ms;">Department Objectives</h3>
+            <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed space-y-2">
+                <li class="animate-fade-in-up" style="animation-delay: 1300ms;">To build skilled professionals in the domain of IT infrastructure, software engineering, and cybersecurity.</li>
+                <li class="animate-fade-in-up" style="animation-delay: 1400ms;">To foster analytical thinking and hands-on learning through lab sessions and projects.</li>
+                <li class="animate-fade-in-up" style="animation-delay: 1500ms;">To promote research and entrepreneurship in cutting-edge areas like cloud computing, mobile app development, and AI in IT.</li>
+                <li class="animate-fade-in-up" style="animation-delay: 1600ms;">To align with industry standards and global certification programs.</li>
+            </ul>
+
+            <!-- Research & Publications Section -->
+            <h3 class="text-3xl font-bold text-blue-700 mb-4 mt-8 animate-slide-in-left" style="animation-delay: 1700ms;">Research & Publications</h3>
+            <div class="text-lg text-gray-700 leading-relaxed space-y-4">
+                <p class="animate-fade-in-up" style="animation-delay: 1800ms;">
+                    The department actively promotes research in domains like:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 animate-fade-in-up" style="animation-delay: 1900ms;">
+                    <li>Cloud Security</li>
+                    <li>Artificial Intelligence Applications in IT</li>
+                    <li>Internet of Things (IoT)</li>
+                    <li>Web 3.0 & Blockchain Solutions</li>
+                </ul>
+                <p class="animate-fade-in-up" style="animation-delay: 2000ms;">
+                    Students and faculty regularly publish in IEEE, Springer, and UGC Care Journals, and participate in tech symposiums and coding fests.
+                </p>
+
+                <div class="overflow-x-auto mt-6 animate-fade-in-up" style="animation-delay: 2100ms;">
+                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                        <thead>
+                            <tr class="bg-blue-600 text-white">
+                                <th class="py-3 px-4 text-left border-b border-blue-700 rounded-tl-lg">Sr. No.</th>
+                                <th class="py-3 px-4 text-left border-b border-blue-700">Title</th>
+                                <th class="py-3 px-4 text-left border-b border-blue-700">AY 2019-20</th>
+                                <th class="py-3 px-4 text-left border-b border-blue-700">AY 2020-21</th>
+                                <th class="py-3 px-4 text-left border-b border-blue-700">AY 2021-22</th>
+                                <th class="py-3 px-4 text-left border-b border-blue-700">AY 2022-23</th>
+                                <th class="py-3 px-4 text-left border-b border-blue-700 rounded-tr-lg">AY 2023-24</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-blue-50 transition-colors duration-200">
+                                <td class="py-3 px-4 border-b border-gray-200">1</td>
+                                <td class="py-3 px-4 border-b border-gray-200">Research Papers</td>
+                                <td class="py-3 px-4 border-b border-gray-200">10</td>
+                                <td class="py-3 px-4 border-b border-gray-200">13</td>
+                                <td class="py-3 px-4 border-b border-gray-200">21</td>
+                                <td class="py-3 px-4 border-b border-gray-200">23</td>
+                                <td class="py-3 px-4 border-b border-gray-200">26</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition-colors duration-200">
+                                <td class="py-3 px-4 border-b border-gray-200">2</td>
+                                <td class="py-3 px-4 border-b border-gray-200">Projects</td>
+                                <td class="py-3 px-4 border-b border-gray-200">14</td>
+                                <td class="py-3 px-4 border-b border-gray-200">18</td>
+                                <td class="py-3 px-4 border-b border-gray-200">16</td>
+                                <td class="py-3 px-4 border-b border-gray-200">18</td>
+                                <td class="py-3 px-4 border-b border-gray-200">19</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition-colors duration-200">
+                                <td class="py-3 px-4 border-b border-gray-200">3</td>
+                                <td class="py-3 px-4 border-b border-gray-200">Internships</td>
+                                <td class="py-3 px-4 border-b border-gray-200">21</td>
+                                <td class="py-3 px-4 border-b border-gray-200">24</td>
+                                <td class="py-3 px-4 border-b border-gray-200">45</td>
+                                <td class="py-3 px-4 border-b border-gray-200">65</td>
+                                <td class="py-3 px-4 border-b border-gray-200">70</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition-colors duration-200">
+                                <td class="py-3 px-4 border-b border-gray-200">4</td>
+                                <td class="py-3 px-4 border-b border-gray-200">FDP/Workshops/Seminars/Conferences Attended</td>
+                                <td class="py-3 px-4 border-b border-gray-200">24</td>
+                                <td class="py-3 px-4 border-b border-gray-200">32</td>
+                                <td class="py-3 px-4 border-b border-gray-200">49</td>
+                                <td class="py-3 px-4 border-b border-gray-200">56</td>
+                                <td class="py-3 px-4 border-b border-gray-200">61</td>
+                            </tr>
+                            <tr class="hover:bg-blue-50 transition-colors duration-200">
+                                <td class="py-3 px-4">5</td>
+                                <td class="py-3 px-4">FDP/Workshops/Seminars/Conferences Organized</td>
+                                <td class="py-3 px-4">1</td>
+                                <td class="py-3 px-4">2</td>
+                                <td class="py-3 px-4">3</td>
+                                <td class="py-3 px-4">3</td>
+                                <td class="py-3 px-4">2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        
+
+        <!-- Events Page -->
+        <section id="events-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Upcoming & Past Events</h2>
+            
+            <div id="event-list-view">
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+                    
+                    <!-- Past Events is now the main events list -->
+                    <div class="md:col-span-1 animate-fade-in-right"> <!-- Make it span full width if upcoming is removed -->
+                        <h3 class="text-3xl font-semibold text-blue-700 mb-4">All Events</h3>
+                        <ul class="space-y-4" id="past-events-list">
+                            <li class="bg-blue-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="0">
+                                <h4 class="text-xl font-bold text-blue-600">Freshers Party</h4>
+                                <p class="text-gray-700">Date: July 04, 2025</p>
+                                <p class="text-gray-600">A vibrant welcome event for first-year students filled with fun, music, dance, and ice-breaking activities to foster camaraderie and college spirit.</p>
+                            </li>
+                            <li class="bg-blue-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="1">
+                                <h4 class="text-xl font-bold text-blue-600">Wall Painting Activity</h4>
+                                <p class="text-gray-700">Date: July 03, 2025</p>
+                                <p class="text-gray-600">A creative initiative to beautify the campus walls through student-led artwork, promoting expression, collaboration, and visual storytelling.</p>
+                            </li>
+                            <li class="bg-blue-100 p-4 rounded-lg shadow-md transform hover:translate-y-[-5px] transition-transform duration-300 cursor-pointer" data-event-index="2">
+                                <h4 class="text-xl font-bold text-blue-600">Debate Competition for Second Year Students</h4>
+                                <p class="text-gray-700">Date: July 02, 2025</p>
+                                <p class="text-gray-600">An engaging debate competition designed for second-year students during their induction, fostering critical thinking and public speaking skills.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Detail View -->
+            <div id="event-detail-view" class="event-detail-view">
+                <button id="back-to-events-btn" class="mb-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                    &larr; Back to All Events
+                </button>
+                <h3 id="event-detail-title" class="text-4xl font-bold text-blue-800 mb-4 animate-slide-in-top"></h3>
+                <p id="event-detail-date" class="text-lg text-gray-700 mb-4 animate-fade-in-up"></p>
+                <p id="event-detail-description" class="text-lg text-gray-700 leading-relaxed mb-8 animate-fade-in-up" style="animation-delay: 100ms;"></p>
+                
+                <div id="event-detail-images" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8">
+                    <!-- Event-specific images will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Alumni Page -->
+        <section id="alumni-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Our Esteemed Alumni</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="alumni-items">
+                
+            </div>
+        </section>
+
+        <!-- Staff Page -->
+        <section id="staff-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Our Dedicated Staff</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6" id="staff-items">
+                <!-- Staff profiles -->
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Vilas-Gaikwad.jpg" alt="Dr. Vilas Shivaji Gaikwad" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=HOD';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Dr. Vilas Shivaji Gaikwad</h3>
+                    <p class="text-blue-600 text-lg">HoD</p>
+                    <p class="text-gray-700 text-sm">Qualification: PhD.(CSE), M.Tech(CSE), BE(CSE)</p>
+                    <p class="text-700 text-sm">Experience: Teaching: 13 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: hodit.tcoer@kjei.edu.in</p>
+                </div>
+
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Aarti-Kale.jpg" alt="Prof. Aarti Kale" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=AK';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Prof. Aarti Kale</h3>
+                    <p class="text-blue-600 text-lg">Assistant Professor</p>
+                    <p class="text-gray-700 text-sm">Qualification: PhD Pursuing</p>
+                    <p class="text-gray-700 text-sm">Experience: Teaching: 12 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: aartikale.tcoer@kjei.edu.in</p>
+                </div>
+
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Gajanan-A.jpg" alt="Prof. Gajanan A" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=GA';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Prof. Gajanan A</h3>
+                    <p class="text-blue-600 text-lg">Assistant Professor</p>
+                    <p class="text-gray-700 text-sm">Qualification: M. Tech (CSE)</p>
+                    <p class="text-gray-700 text-sm">Experience: Teaching: 15 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: gajananarsalwad.tcoer@kjei.edu.in</p>
+                </div>
+
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Pravin-Kamble.jpg" alt="Prof. Pravin R. Kamble" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=PK';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Prof. Pravin R. Kamble</h3>
+                    <p class="text-blue-600 text-lg">Assistant Professor</p>
+                    <p class="text-gray-700 text-sm">Qualification: M.Tech (CSE), PhD (Pursuing)</p>
+                    <p class="text-gray-700 text-sm">Experience: Teaching: 12 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: pravinkamble.tcoer@kjei.edu.in</p>
+                </div>
+
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Pravin-Patil.jpg" alt="Prof. Pravin S.Patil" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=PP';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Prof. Pravin S.Patil</h3>
+                    <p class="text-blue-600 text-lg">Assistant Professor</p>
+                    <p class="text-gray-700 text-sm">Qualification: ME(CS) Ph.D(Pursuing)</p>
+                    <p class="text-gray-700 text-sm">Experience: Teaching: 9.3 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: pravinpatil.tcoer@kjei.edu.in</p>
+                </div>
+
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Rahila-Sayeda.jpg" alt="Mrs. Rahila Sayeda" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=RS';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Mrs. Rahila Sayeda</h3>
+                    <p class="text-blue-600 text-lg">Assistant Professor</p>
+                    <p class="text-gray-700 text-sm">Qualification: ME (COMP)</p>
+                    <p class="text-gray-700 text-sm">Experience: Teaching: 6 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: rahilasayeda.tcoer@kjei.edu.in</p>
+                </div>
+
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                    <img src="Unmesh-Barge.jpg" alt="Mr. Unmesh A. Barge" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A0C4FF/333333?text=UB';">
+                    <h3 class="text-2xl font-semibold text-blue-700">Mr. Unmesh A. Barge</h3>
+                    <p class="text-blue-600 text-lg">Lab Assistant</p>
+                    <p class="text-gray-700 text-sm">Qualification: M. A.</p>
+                    <p class="text-gray-700 text-sm">Experience: Teaching: 13 Years</p>
+                    <p class="text-gray-700 text-sm break-all">Email: unmeshbarge.tcoer@kjei.edu.in</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Laboratories Page -->
+        <section id="laboratories-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Our Laboratories</h2>
+
+            <div class="text-lg text-gray-700 leading-relaxed space-y-4 mb-8">
+                <p class="animate-fade-in-up">
+                    We offer state-of-the-art IT laboratories designed to replicate enterprise-grade environments. Labs include:
+                </p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2 animate-fade-in-up" style="animation-delay: 100ms;">
+                    <li>Networking & Security Lab: (CISCO Routers/Switches, Wireshark, Firewall simulation)</li>
+                    <li>Web & Application Development Lab</li>
+                    <li>Cloud & Virtualization Lab</li>
+                    <li>Database & Data Analytics Lab</li>
+                </ul>
+                <p class="animate-fade-in-up" style="animation-delay: 200ms;">
+                    Students gain exposure to real-world IT tools and platforms like AWS, Azure, SQL Server, Kali Linux, and more.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="lab-items">
+                <!-- Individual Lab Sections with Image Placeholders -->
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Linux Lab</h3>
+                    <img src="it1.jpg" alt="Linux Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A0C4FF/333333?text=Image+Error';">
+                    <p class="text-gray-700 text-sm">Description of Linux Lab and its facilities.</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Network Lab</h3>
+                    <img src="it2.jpg" alt="Network Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A0C4FF/333333?text=Image+Error';">
+                    <p class="text-gray-700 text-sm">Description of Network Lab and its facilities.</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Programming Lab II</h3>
+                    <img src="it3.jpg" alt="Programming Lab II" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A0C4FF/333333?text=Image+Error';">
+                    <p class="text-gray-700 text-sm">Description of Programming Lab II and its facilities.</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Programming Lab III</h3>
+                    <img src="it4.jpg" alt="Programming Lab III" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A0C4FF/333333?text=Image+Error';">
+                    <p class="text-gray-700 text-sm">Description of Programming Lab III and its facilities.</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">IoT Lab</h3>
+                    <img src="it5.jpg" alt="IoT Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A0C4FF/333333?text=Image+Error';">
+                    <p class="text-gray-700 text-sm">Description of IoT Lab and its facilities.</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-4">Project Lab</h3>
+                    <img src="it6.jpg" alt="Project Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A0C4FF/333333?text=Image+Error';">
+                    <p class="text-gray-700 text-sm">Description of Project Lab and its facilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Page (Placeholder) -->
+        <section id="newsletter-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Newsletter</h2>
+            <p class="text-lg text-gray-700 text-center">
+                Check back soon for our latest newsletters!
+            </p>
+            <!-- You can add newsletter archives or a signup form here -->
+        </section>
+
+        <!-- Yearbook Page (Placeholder) -->
+        <section id="yearbook-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Yearbook</h2>
+            <p class="text-lg text-gray-700 text-center">
+                Our annual yearbook will be available here soon!
+            </p>
+            <!-- You can add yearbook content or links to previous yearbooks here -->
+        </section>
+
+        <!-- Students Committee Page (New) -->
+        <section id="students-committee-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
+            <h2 class="text-4xl font-bold text-blue-800 mb-6 text-center animate-slide-in-top">Students Committee</h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto mb-8 text-center animate-fade-in-up">
+                Meet the passionate TITANS (2024–2025) team leading our events and initiatives.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="students-committee-items">
+                <!-- 19 Photo Placeholders for Students Committee -->
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="1.webp" alt="Student Committee Member 1" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">Atharva Sakhare</h3>
+                    <p class="text-gray-700 text-sm">PRESIDENT</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="2.webp" alt="Student Committee Member 2" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">Bhoomika Whandhekar</h3>
+                    <p class="text-gray-700 text-sm">VICE PRESIDENT</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="3.webp" alt="Student Committee Member 3" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">Aryan Jathar</h3>
+                    <p class="text-gray-700 text-sm">SECRETARY</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="4.webp" alt="Student Committee Member 4" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">Prajyot Mane</h3>
+                    <p class="text-gray-700 text-sm">TREASURER</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="5.webp" alt="Student Committee Member 5" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">JANHAVI KALE</h3>
+                    <p class="text-gray-700 text-sm">PLACEMENT COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="6.webp" alt="Student Committee Member 6" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">VAISHNAVI JADHAV</h3>
+                    <p class="text-gray-700 text-sm">CULTURAL COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="7.webp" alt="Student Committee Member 7" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">SOUNDARYA PATIL</h3>
+                    <p class="text-gray-700 text-sm">CULTURAL COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="8.webp" alt="Student Committee Member 8" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">PRANJAL NALAWADE</h3>
+                    <p class="text-gray-700 text-sm">CULTURAL COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="9.webp" alt="Student Committee Member 9" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">HARSHADA TAVHARE</h3>
+                    <p class="text-gray-700 text-sm">SPORTS COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="10.webp" alt="Student Committee Member 10" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">SWAPNIL CHIKTE</h3>
+                    <p class="text-gray-700 text-sm">STAGE MANAGER</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="11.webp" alt="Student Committee Member 11" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">SOHAM DESHMUKH</h3>
+                    <p class="text-gray-700 text-sm">ANCHORING COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="12.webp" alt="Student Committee Member 12" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">ABDULDIYAN DESHMUKH</h3>
+                    <p class="text-gray-700 text-sm">ANCHORING COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="13.webp" alt="Student Committee Member 13" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">SHIVAM BAIRAGYA</h3>
+                    <p class="text-gray-700 text-sm">PHOTOGRAPHERR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="14.webp" alt="Student Committee Member 14" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">VAISHNAVI WAIKAR</h3>
+                    <p class="text-gray-700 text-sm">PHOTOGRAPHER</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="15.webp" alt="Student Committee Member 15" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">OMKAR GUNGE</h3>
+                    <p class="text-gray-700 text-sm">EVENT COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="16.webp" alt="Student Committee Member 16" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">MAHADEV SWAMI</h3>
+                    <p class="text-gray-700 text-sm">EVENT COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="17.webp" alt="Student Committee Member 17" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">SHRIKANT HUNDEKAR</h3>
+                    <p class="text-gray-700 text-sm">DISCIPLINE COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="18.webp" alt="Student Committee Member 18" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">UPASNA SHIMPI</h3>
+                    <p class="text-gray-700 text-sm">DISCIPLINE COORDINATOR</p>
+                </div>
+                <div class="bg-blue-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 hover:translate-y-[-5px] transition-transform duration-300 committee-member-item animate-scale-in">
+                    <img src="19.webp" alt="Student Committee Member 19" class="h-auto w-full mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x187/A0C4FF/333333?text=Error';">
+                    <h3 class="text-xl font-semibold text-blue-700">MOHANISH KULKARNI</h3>
+                    <p class="text-gray-700 text-sm">ADVERTISEMENT COORDINATOR</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-700 p-4 text-center text-blue-100 mt-8">
+        <p>&copy; <span id="current-year"></span> TITANS. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to get the current year for the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Data for events (simulating a backend API or database)
+        const eventsData = [
+            {
+                title: 'Freshers Party',
+                date: 'July 04, 2025',
+                description: 'A vibrant welcome event for first-year students filled with fun, music, dance, and ice-breaking activities to foster camaraderie and college spirit.',
+                images: [
+                    'F1.jpg',
+                    'F2.jpg'                    
+                ]
+            },
+            {
+                title: 'Wall Painting Activity',
+                date: 'July 03, 2025',
+                description: 'A creative initiative to beautify the campus walls through student-led artwork, promoting expression, collaboration, and visual storytelling.',
+                images: [
+                    'W1.jpg', 'W3.jpg', 'W4.jpg', 'W7.jpg', 'W8.jpg', 'W9.jpg', 'W10.jpg', 'W11.jpg'
+                ]
+            },
+            {
+                title: 'Debate Competition for Second Year Students',
+                date: 'July 02, 2025',
+                description: 'An engaging debate competition designed for second-year students during their induction, fostering critical thinking and public speaking skills.',
+                images: [
+                    'D1.jpg', 'D2.jpg', 'D3.jpg', 'D4.jpg', 'D6.jpg', 'D7.jpg'
+                ]
+            }
+        ];
+
+
+        // Function to show a specific page and hide others
+        function showPage(pageId) {
+            // Get all page content sections
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => {
+                page.style.display = 'none'; // Hide all pages
+                // Remove all animation classes to allow re-triggering
+                page.classList.remove('animate-fade-in', 'animate-slide-in-top', 'animate-fade-in-up', 'animate-fade-in-bottom', 'animate-fade-in-left', 'animate-fade-in-right', 'animate-scale-in');
+            });
+
+            // Get all navigation buttons
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+                button.classList.add('text-blue-100', 'hover:text-white', 'hover:bg-blue-800');
+            });
+
+            // Show the selected page
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.style.display = 'block'; // Show the selected page
+                // Re-add main page animation class after a small delay to trigger it
+                setTimeout(() => {
+                    activePage.classList.add('animate-fade-in');
+
+                    // Apply specific animations for elements within the active page
+                    // This ensures animations re-run when navigating between pages
+                    const elementsToAnimate = activePage.querySelectorAll('[class*="animate-"]');
+                    elementsToAnimate.forEach(el => {
+                        const animationClasses = Array.from(el.classList).filter(cls => cls.startsWith('animate-'));
+                        el.classList.remove(...animationClasses); // Remove all to re-trigger
+                        // Re-add after a tiny delay for browser repaint
+                        setTimeout(() => {
+                            el.classList.add(...animationClasses);
+                        }, 10);
+                    });
+
+                    // Special handling for staggered animations in grids
+                    if (pageId === 'alumni-page') {
+                        const alumniItems = document.querySelectorAll('#alumni-items .alumni-item');
+                        alumniItems.forEach((item, index) => {
+                            item.classList.remove('animate-scale-in');
+                            setTimeout(() => {
+                                item.classList.add('animate-scale-in');
+                                item.style.animationDelay = `${index * 70}ms`; /* Adjusted delay */
+                            }, 10);
+                        });
+                    } else if (pageId === 'staff-page') {
+                        const staffItems = document.querySelectorAll('#staff-items .staff-item');
+                        staffItems.forEach((item, index) => {
+                            item.classList.remove('animate-scale-in');
+                            setTimeout(() => {
+                                item.classList.add('animate-scale-in');
+                                item.style.animationDelay = `${index * 70}ms`; /* Adjusted delay */
+                            }, 10);
+                        });
+                    } else if (pageId === 'laboratories-page') {
+                        const labItems = document.querySelectorAll('#lab-items .lab-item');
+                        labItems.forEach((item, index) => {
+                            item.classList.remove('animate-scale-in');
+                            setTimeout(() => {
+                                item.classList.add('animate-scale-in');
+                                item.style.animationDelay = `${index * 70}ms`;
+                            }, 10);
+                        });
+                    } else if (pageId === 'students-committee-page') {
+                        const committeeItems = document.querySelectorAll('#students-committee-items .committee-member-item');
+                        committeeItems.forEach((item, index) => {
+                            item.classList.remove('animate-scale-in');
+                            setTimeout(() => {
+                                item.classList.add('animate-scale-in');
+                                item.style.animationDelay = `${index * 50}ms`; // Slightly faster stagger for more items
+                            }, 10);
+                        });
+                    } else if (pageId === 'events-page') {
+                        // Ensure event list is shown first when navigating to events page
+                        document.getElementById('event-list-view').style.display = 'grid';
+                        document.getElementById('event-detail-view').style.display = 'none';
+
+                        const eventListItems = document.querySelectorAll('#past-events-list li'); // Only past-events-list now
+                        eventListItems.forEach((item, index) => {
+                            item.classList.remove('animate-scale-in');
+                            setTimeout(() => {
+                                item.classList.add('animate-scale-in');
+                                item.style.animationDelay = `${index * 100}ms`;
+                            }, 10);
+                        });
+                    }
+
+                }, 10); // Small delay to allow display:none to take effect before animation
+
+                // Highlight the active navigation button
+                const activeButton = document.getElementById(`nav-${pageId.replace('-page', '')}`);
+                if (activeButton) {
+                    activeButton.classList.remove('text-blue-100', 'hover:text-white', 'hover:bg-blue-800');
+                    activeButton.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+                }
+            }
+        }
+
+        // Function to display event details
+        function showEventDetails(eventIndex) {
+            const event = eventsData[eventIndex];
+            if (!event) return; // Guard clause if event doesn't exist
+
+            // Hide event list view
+            document.getElementById('event-list-view').style.display = 'none';
+
+            // Show event detail view
+            const detailView = document.getElementById('event-detail-view');
+            detailView.style.display = 'block';
+
+            // Populate details
+            document.getElementById('event-detail-title').textContent = event.title;
+            document.getElementById('event-detail-date').textContent = `Date: ${event.date}`;
+            document.getElementById('event-detail-description').textContent = event.description;
+
+            // Clear previous images and add new ones
+            const imagesContainer = document.getElementById('event-detail-images');
+            imagesContainer.innerHTML = ''; // Clear existing images
+            event.images.forEach((imgSrc, index) => {
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'bg-blue-100 rounded-lg overflow-hidden shadow-md animate-scale-in';
+                imgDiv.style.animationDelay = `${index * 70}ms`; // Staggered animation for images
+
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = event.title + ' Image ' + (index + 1);
+                // Adjusted classes for original proportion
+                img.className = 'w-full h-auto object-contain rounded-lg'; 
+                img.onerror = function() { this.onerror=null; this.src='https://placehold.co/400x300/A0C4FF/333333?text=Image+Error'; };
+
+                imgDiv.appendChild(img);
+                imagesContainer.appendChild(imgDiv);
+            });
+
+            // Re-apply animations to the detail view elements
+            const elementsToAnimate = detailView.querySelectorAll('[class*="animate-"]');
+            elementsToAnimate.forEach(el => {
+                const animationClasses = Array.from(el.classList).filter(cls => cls.startsWith('animate-'));
+                el.classList.remove(...animationClasses);
+                setTimeout(() => {
+                    el.classList.add(...animationClasses);
+                }, 10);
+            });
+        }
+
+        // Add event listeners to navigation buttons
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get current year for footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            const navButtons = document.querySelectorAll('.nav-button');
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const pageId = button.id.replace('nav-', '') + '-page';
+                    showPage(pageId);
+                });
+            });
+
+            // Add click listeners to individual event list items
+            const eventListItems = document.querySelectorAll('#past-events-list li'); // Only past-events-list now
+            eventListItems.forEach((item) => {
+                item.addEventListener('click', (event) => {
+                    const listItem = event.target.closest('li');
+                    if (listItem && listItem.dataset.eventIndex) {
+                        showEventDetails(parseInt(listItem.dataset.eventIndex));
+                    }
+                });
+            });
+            
+            // Add click listener to the "Back to All Events" button
+            const backButton = document.getElementById('back-to-events-btn');
+            if (backButton) {
+                backButton.addEventListener('click', () => {
+                    document.getElementById('event-detail-view').style.display = 'none';
+                    document.getElementById('event-list-view').style.display = 'grid'; // Show the grid layout for events
+                    // Re-apply animations to event list items when returning
+                    const currentEventListItems = document.querySelectorAll('#past-events-list li'); // Only past-events-list now
+                    currentEventListItems.forEach((item, index) => {
+                        item.classList.remove('animate-scale-in');
+                        setTimeout(() => {
+                            item.classList.add('animate-scale-in');
+                            item.style.animationDelay = `${index * 100}ms`;
+                        }, 10);
+                    });
+                });
+            }
+
+            // Show the home page by default when the page loads
+            showPage('home-page');
+        });
+    </script>
+
+</body>
+</html>
