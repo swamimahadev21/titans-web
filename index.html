@@ -15,23 +15,23 @@
             to { opacity: 1; }
         }
         @keyframes slideInTop {
-            from { transform: translateY(-30px); opacity: 0; } /* Increased slide distance */
+            from { transform: translateY(-30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         @keyframes fadeInUp {
-            from { transform: translateY(30px); opacity: 0; } /* Increased slide distance */
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         @keyframes fadeInBottom {
-            from { transform: translateY(30px); opacity: 0; } /* Increased slide distance */
+            from { transform: translateY(30px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
         @keyframes fadeInLeft {
-            from { transform: translateX(-30px); opacity: 0; } /* Increased slide distance */
+            from { transform: translateX(-30px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
         @keyframes fadeInRight {
-            from { transform: translateX(30px); opacity: 0; } /* Increased slide distance */
+            from { transform: translateX(30px); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
         @keyframes scaleIn {
@@ -60,8 +60,7 @@
         /* Hide pages by default, JavaScript will manage visibility */
         .page-content {
             display: none;
-            /* Ensure animations re-run when page is shown */
-            animation-fill-mode: backwards; /* Keeps initial state of animation */
+            animation-fill-mode: backwards;
         }
         /* Hide detail view by default */
         .event-detail-view {
@@ -81,63 +80,102 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            font-size: 1.25rem; /* text-xl */
-            font-weight: 600; /* font-semibold */
+            font-size: 1.25rem;
+            font-weight: 600;
             animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        /* Custom styles for the About Department sub-tabs */
+        .about-sub-nav-item {
+            position: relative;
+            padding: 1rem 2rem;
+            background-color: #f3f4f6; /* gray-100 */
+            color: #4b5563; /* gray-700 */
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%); /* Right-pointing shape */
+            margin-right: -1rem; /* Overlap for the pointed effect */
+            z-index: 1; /* Ensure overlap works */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .about-sub-nav-item:last-child {
+            clip-path: none; /* No clip-path for the last item */
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        .about-sub-nav-item.active {
+            background-color: #A60000; /* Active red color */
+            color: white;
+            z-index: 2; /* Bring active tab to front */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .about-sub-nav-item:hover:not(.active) {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+        }
+
+        /* Adjustments for responsiveness of sub-tabs */
+        @media (max-width: 768px) {
+            .about-sub-nav-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .about-sub-nav-item {
+                clip-path: none; /* Remove clip-path on small screens */
+                margin-right: 0;
+                border-radius: 0.5rem; /* Standard rounded corners */
+                margin-bottom: 0.5rem; /* Space between stacked items */
+            }
+            .about-sub-nav-item:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Homepage gradient shadow */
+        .homepage-gradient-shadow {
+            position: relative;
+            overflow: hidden; /* Ensures gradient stays within bounds */
+        }
+
+        /* This pseudo-element creates the top-to-bottom red gradient shadow */
+        .homepage-gradient-shadow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%; /* Adjust height as needed for shadow extent */
+            background: linear-gradient(to bottom, rgba(166, 0, 0, 0.3), transparent); /* A60000 with transparency */
+            pointer-events: none; /* Allows clicks on content below */
+            z-index: 0; /* Ensure it's above content but below logo/text */
         }
     </style>
 </head>
 <body class="min-h-screen bg-red-50 text-gray-900">
 
-    <!-- Navigation Bar -->
-    <nav class="bg-red-700 p-4 shadow-lg">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-            <!-- Club Logo in Nav Bar -->
-            <div class="mb-4 md:mb-0 transform hover:scale-105 transition-transform duration-300">
-                <img
-                    src="titanlogo.png"
-                    alt="Titans Trinity IT Club Logo"
-                    class="h-16 w-auto rounded-md"
-                    onerror="this.onerror=null;this.src='https://placehold.co/100x50/A60000/FFFFFF?text=TITANS+LOGO';"
-                />
-            </div>
-            <!-- Navigation Links -->
-            <ul class="flex flex-wrap justify-center gap-4 md:gap-8">
-                <li><button id="nav-home" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Home</button></li>
-                <li><button id="nav-about" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">About Department</button></li>
-                <!-- Removed Gallery Tab -->
-                <li><button id="nav-events" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Events</button></li>
-                <li><button id="nav-alumni" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Alumni</button></li>
-                <li><button id="nav-staff" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Staff</button></li>
-                <li><button id="nav-laboratories" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Laboratories</button></li>
-                <li><button id="nav-newsletter" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Newsletter</button></li>
-                <li><button id="nav-yearbook" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Yearbook</button></li>
-                <li><button id="nav-students-committee" class="nav-button px-4 py-2 rounded-lg transition-all duration-300 text-red-100 hover:text-white hover:bg-red-800">Students Committee</button></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Page Content Area -->
+    <!-- Main Content Area -->
     <main class="container mx-auto p-6 md:p-8">
         <!-- Home Page -->
-        <section id="home-page" class="page-content text-center py-16 bg-white rounded-xl shadow-2xl mb-8 animate-fade-in">
+        <section id="home-page" class="page-content text-center py-16 bg-white rounded-xl shadow-2xl mb-8 animate-fade-in homepage-gradient-shadow">
             <!-- New Logo Placement on Home Page -->
             <img
                 src="titanlogo.png"
                 alt="Titans Trinity IT Club Logo"
-                class="h-24 w-auto mx-auto mb-6 animate-scale-in"
+                class="h-24 w-auto mx-auto mb-6 animate-scale-in relative z-10"
                 onerror="this.onerror=null;this.src='https://placehold.co/150x75/A60000/FFFFFF?text=TITANS+LOGO';"
             />
-            <h2 class="text-5xl font-extrabold text-red-800 mb-6 animate-slide-in-top">
+            <h2 class="text-5xl font-extrabold text-red-800 mb-6 animate-slide-in-top relative z-10">
                 Welcome to <span class="text-red-600">TITANS</span>
             </h2>
-            <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8 animate-fade-in-up">
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8 animate-fade-in-up relative z-10">
                 Empowering the next generation of IT professionals through innovation, collaboration, and learning.
             </p>
             
 
             <!-- HOD's View Section -->
-            <div class="max-w-4xl mx-auto mt-16">
+            <div class="max-w-4xl mx-auto mt-16 relative z-10">
                 <!-- Quote Section -->
                 <div class="bg-red-700 text-white p-6 rounded-t-xl text-left shadow-lg mb-0.5 animate-slide-in-top">
                     <p class="text-2xl font-semibold italic">"Shaping tomorrow’s IT leaders through innovation and excellence."</p>
@@ -170,127 +208,267 @@
 
         <!-- About Department Page -->
         <section id="about-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
-            <h2 class="text-4xl font-bold text-red-800 mb-6 animate-slide-in-left">About Our Department</h2>
+            <h2 class="text-4xl font-bold text-red-800 mb-6 text-center animate-slide-in-left">About Our Department</h2>
 
-            <div class="bg-red-50 p-6 rounded-lg mb-8 shadow-inner animate-fade-in-up">
-                <p class="text-lg text-gray-700 leading-relaxed mb-4">
-                    The Department of Information Technology at <b>Trinity College of Engineering and Research (TCOER), Pune</b>, established in the academic year 2008–09, has consistently demonstrated its commitment to excellence in teaching, learning, and research within the field of Information Technology.
-                </p>
-                <p class="text-lg text-gray-700 leading-relaxed mb-4" style="animation-delay: 100ms;">
-                    As an autonomous institute offering a B.Tech. program in Information Technology, the department is dedicated to producing industry-ready graduates by providing a curriculum that is both rigorous and aligned with current trends in Software Development, Data Science, Artificial Intelligence, Cyber Security, and Cloud Computing. The program emphasizes hands-on learning through projects, workshops, hackathons, and internships, enabling students to develop practical skills alongside theoretical knowledge.
-                </p>
-                <p class="text-lg text-gray-700 leading-relaxed" style="animation-delay: 200ms;">
-                    Strategic collaborations with leading IT companies and training partners, through Memorandums of Understanding (MoUs), facilitate enhanced skill development and industry exposure. Moreover, the department places significant emphasis on the holistic development of students, nurturing soft skills, communication abilities, and personality traits while also encouraging aspirations for higher education, competitive examinations, and entrepreneurship.
-                </p>
+            <!-- About Sub-Navigation -->
+            <div class="about-sub-nav-container flex flex-wrap justify-center mb-8 shadow-md rounded-lg overflow-hidden">
+                <button id="about-sub-about" class="about-sub-nav-item active" data-target="about-overview">ABOUT</button>
+                <button id="about-sub-objectives" class="about-sub-nav-item" data-target="about-objectives">OBJECTIVES</button>
+                <button id="about-sub-faculty" class="about-sub-nav-item" data-target="about-faculty">FACULTY</button>
+                <button id="about-sub-laboratories" class="about-sub-nav-item" data-target="about-laboratories">LABORATORIES</button>
+                <button id="about-sub-r-and-d" class="about-sub-nav-item" data-target="about-r-and-d">R&D</button>
             </div>
 
-            <div class="text-lg text-gray-700 leading-relaxed space-y-4 mb-8">
-                <p class="animate-fade-in-up" style="animation-delay: 300ms;">
-                    The department's infrastructure supports its academic mission through state-of-the-art laboratories equipped with high-speed internet and modern software tools, in addition to dedicated project labs and innovation hubs. Students also benefit from access to online learning platforms, electronic resources, and coding practice environments that foster continuous learning. The faculty comprises a team of highly qualified, experienced, and research-oriented educators who are committed to mentoring students and advancing research in trending domains. The department actively promotes research and development through engagement in funded projects, scholarly publications, and technical paper presentations. Both faculty and students are encouraged to contribute to reputed journals and conferences, with a strong focus on solving real-world problems through interdisciplinary approaches.
+            <!-- About Overview Content -->
+            <div id="about-overview" class="about-sub-content">
+                <div class="bg-red-50 p-6 rounded-lg mb-8 shadow-inner animate-fade-in-up">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                        The Department of Information Technology at <b>Trinity College of Engineering and Research (TCOER), Pune</b>, established in the academic year 2008–09, has consistently demonstrated its commitment to excellence in teaching, learning, and research within the field of Information Technology.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-4" style="animation-delay: 100ms;">
+                        As an autonomous institute offering a B.Tech. program in Information Technology, the department is dedicated to producing industry-ready graduates by providing a curriculum that is both rigorous and aligned with current trends in Software Development, Data Science, Artificial Intelligence, Cyber Security, and Cloud Computing. The program emphasizes hands-on learning through projects, workshops, hackathons, and internships, enabling students to develop practical skills alongside theoretical knowledge.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed" style="animation-delay: 200ms;">
+                        Strategic collaborations with leading IT companies and training partners, through Memorandums of Understanding (MoUs), facilitate enhanced skill development and industry exposure. Moreover, the department places significant emphasis on the holistic development of students, nurturing soft skills, communication abilities, and personality traits while also encouraging aspirations for higher education, competitive examinations, and entrepreneurship.
+                    </p>
+                </div>
+
+                <div class="text-lg text-gray-700 leading-relaxed space-y-4 mb-8">
+                    <p class="animate-fade-in-up" style="animation-delay: 300ms;">
+                        The department's infrastructure supports its academic mission through state-of-the-art laboratories equipped with high-speed internet and modern software tools, in addition to dedicated project labs and innovation hubs. Students also benefit from access to online learning platforms, electronic resources, and coding practice environments that foster continuous learning. The faculty comprises a team of highly qualified, experienced, and research-oriented educators who are committed to mentoring students and advancing research in trending domains. The department actively promotes research and development through engagement in funded projects, scholarly publications, and technical paper presentations. Both faculty and students are encouraged to contribute to reputed journals and conferences, with a strong focus on solving real-world problems through interdisciplinary approaches.
+                    </p>
+                    <p class="animate-fade-in-up" style="animation-delay: 400ms;">
+                        The accomplishments of the department's students are noteworthy, with a consistent record of excellent placements in multinational corporations and startups. Students have also earned recognition in national-level competitions, coding contests, and innovation challenges. Alumni of the department have gone on to build successful careers in esteemed organizations across the globe and pursue advanced degrees at premier academic institutions, reflecting the department’s goal of fostering academic and professional excellence.
+                    </p>
+                </div>
+
+                <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left" style="animation-delay: 500ms;">Vision of Department</h3>
+                <p class="text-lg text-gray-700 leading-relaxed mb-8 animate-fade-in-up" style="animation-delay: 600ms;">
+                    To create skilled information technology professionals with a consistent academics for social well-being.
                 </p>
-                <p class="animate-fade-in-up" style="animation-delay: 400ms;">
-                    The accomplishments of the department's students are noteworthy, with a consistent record of excellent placements in multinational corporations and startups. Students have also earned recognition in national-level competitions, coding contests, and innovation challenges. Alumni of the department have gone on to build successful careers in esteemed organizations across the globe and pursue advanced degrees at premier academic institutions, reflecting the department’s goal of fostering academic and professional excellence.
-                </p>
-            </div>
 
-            <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left" style="animation-delay: 500ms;">Vision of Department</h3>
-            <p class="text-lg text-gray-700 leading-relaxed mb-8 animate-fade-in-up" style="animation-delay: 600ms;">
-                To create skilled information technology professionals with a consistent academics for social well-being.
-            </p>
-
-            <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left" style="animation-delay: 700ms;">Mission of Department</h3>
-            <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed space-y-2">
-                <li class="animate-fade-in-up" style="animation-delay: 800ms;">To inculcate the IT skills in students to be successful in their profession.</li>
-                <li class="animate-fade-in-up" style="animation-delay: 900ms;">To Provide opportunities for overall personality development.</li>
-                <li class="animate-fade-in-up" style="animation-delay: 1000ms;">To train students for demanding technologies to meet industrial needs.</li>
-                <li class="animate-fade-in-up" style="animation-delay: 1100ms;">To supply society with proficient IT professionals.</li>
-            </ul>
-
-            <h3 class="text-3xl font-bold text-red-700 mb-4 mt-8 animate-slide-in-left" style="animation-delay: 1200ms;">Department Objectives</h3>
-            <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed space-y-2">
-                <li class="animate-fade-in-up" style="animation-delay: 1300ms;">To build skilled professionals in the domain of IT infrastructure, software engineering, and cybersecurity.</li>
-                <li class="animate-fade-in-up" style="animation-delay: 1400ms;">To foster analytical thinking and hands-on learning through lab sessions and projects.</li>
-                <li class="animate-fade-in-up" style="animation-delay: 1500ms;">To promote research and entrepreneurship in cutting-edge areas like cloud computing, mobile app development, and AI in IT.</li>
-                <li class="animate-fade-in-up" style="animation-delay: 1600ms;">To align with industry standards and global certification programs.</li>
-            </ul>
-
-            <!-- Research & Publications Section -->
-            <h3 class="text-3xl font-bold text-red-700 mb-4 mt-8 animate-slide-in-left" style="animation-delay: 1700ms;">Research & Publications</h3>
-            <div class="text-lg text-gray-700 leading-relaxed space-y-4">
-                <p class="animate-fade-in-up" style="animation-delay: 1800ms;">
-                    The department actively promotes research in domains like:
-                </p>
-                <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 animate-fade-in-up" style="animation-delay: 1900ms;">
-                    <li>Cloud Security</li>
-                    <li>Artificial Intelligence Applications in IT</li>
-                    <li>Internet of Things (IoT)</li>
-                    <li>Web 3.0 & Blockchain Solutions</li>
+                <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left" style="animation-delay: 700ms;">Mission of Department</h3>
+                <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed space-y-2">
+                    <li class="animate-fade-in-up" style="animation-delay: 800ms;">To inculcate the IT skills in students to be successful in their profession.</li>
+                    <li class="animate-fade-in-up" style="animation-delay: 900ms;">To Provide opportunities for overall personality development.</li>
+                    <li class="animate-fade-in-up" style="animation-delay: 1000ms;">To train students for demanding technologies to meet industrial needs.</li>
+                    <li class="animate-fade-in-up" style="animation-delay: 1100ms;">To supply society with proficient IT professionals.</li>
                 </ul>
-                <p class="animate-fade-in-up" style="animation-delay: 2000ms;">
-                    Students and faculty regularly publish in IEEE, Springer, and UGC Care Journals, and participate in tech symposiums and coding fests.
-                </p>
+            </div>
 
-                <div class="overflow-x-auto mt-6 animate-fade-in-up" style="animation-delay: 2100ms;">
-                    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
-                        <thead>
-                            <tr class="bg-red-600 text-white">
-                                <th class="py-3 px-4 text-left border-b border-red-700 rounded-tl-lg">Sr. No.</th>
-                                <th class="py-3 px-4 text-left border-b border-red-700">Title</th>
-                                <th class="py-3 px-4 text-left border-b border-red-700">AY 2019-20</th>
-                                <th class="py-3 px-4 text-left border-b border-red-700">AY 2020-21</th>
-                                <th class="py-3 px-4 text-left border-b border-red-700">AY 2021-22</th>
-                                <th class="py-3 px-4 text-left border-b border-red-700">AY 2022-23</th>
-                                <th class="py-3 px-4 text-left border-b border-red-700 rounded-tr-lg">AY 2023-24</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="hover:bg-red-50 transition-colors duration-200">
-                                <td class="py-3 px-4 border-b border-gray-200">1</td>
-                                <td class="py-3 px-4 border-b border-gray-200">Research Papers</td>
-                                <td class="py-3 px-4 border-b border-gray-200">10</td>
-                                <td class="py-3 px-4 border-b border-gray-200">13</td>
-                                <td class="py-3 px-4 border-b border-gray-200">21</td>
-                                <td class="py-3 px-4 border-b border-gray-200">23</td>
-                                <td class="py-3 px-4 border-b border-gray-200">26</td>
-                            </tr>
-                            <tr class="hover:bg-red-50 transition-colors duration-200">
-                                <td class="py-3 px-4 border-b border-gray-200">2</td>
-                                <td class="py-3 px-4 border-b border-gray-200">Projects</td>
-                                <td class="py-3 px-4 border-b border-gray-200">14</td>
-                                <td class="py-3 px-4 border-b border-gray-200">18</td>
-                                <td class="py-3 px-4 border-b border-gray-200">16</td>
-                                <td class="py-3 px-4 border-b border-gray-200">18</td>
-                                <td class="py-3 px-4 border-b border-gray-200">19</td>
-                            </tr>
-                            <tr class="hover:bg-red-50 transition-colors duration-200">
-                                <td class="py-3 px-4 border-b border-gray-200">3</td>
-                                <td class="py-3 px-4 border-b border-gray-200">Internships</td>
-                                <td class="py-3 px-4 border-b border-gray-200">21</td>
-                                <td class="py-3 px-4 border-b border-gray-200">24</td>
-                                <td class="py-3 px-4 border-b border-gray-200">45</td>
-                                <td class="py-3 px-4 border-b border-gray-200">65</td>
-                                <td class="py-3 px-4 border-b border-gray-200">70</td>
-                            </tr>
-                            <tr class="hover:bg-red-50 transition-colors duration-200">
-                                <td class="py-3 px-4 border-b border-gray-200">4</td>
-                                <td class="py-3 px-4 border-b border-gray-200">FDP/Workshops/Seminars/Conferences Attended</td>
-                                <td class="py-3 px-4 border-b border-gray-200">24</td>
-                                <td class="py-3 px-4 border-b border-gray-200">32</td>
-                                <td class="py-3 px-4 border-b border-gray-200">49</td>
-                                <td class="py-3 px-4 border-b border-gray-200">56</td>
-                                <td class="py-3 px-4 border-b border-gray-200">61</td>
-                            </tr>
-                            <tr class="hover:bg-red-50 transition-colors duration-200">
-                                <td class="py-3 px-4">5</td>
-                                <td class="py-3 px-4">FDP/Workshops/Seminars/Conferences Organized</td>
-                                <td class="py-3 px-4">1</td>
-                                <td class="py-3 px-4">2</td>
-                                <td class="py-3 px-4">3</td>
-                                <td class="py-3 px-4">3</td>
-                                <td class="py-3 px-4">2</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Objectives Content (Hidden by default) -->
+            <div id="about-objectives" class="about-sub-content hidden">
+                <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left">Department Objectives</h3>
+                <ul class="list-disc list-inside text-lg text-gray-700 leading-relaxed space-y-2">
+                    <li class="animate-fade-in-up" style="animation-delay: 100ms;">To build skilled professionals in the domain of IT infrastructure, software engineering, and cybersecurity.</li>
+                    <li class="animate-fade-in-up" style="animation-delay: 200ms;">To foster analytical thinking and hands-on learning through lab sessions and projects.</li>
+                    <li class="animate-fade-in-up" style="animation-delay: 300ms;">To promote research and entrepreneurship in cutting-edge areas like cloud computing, mobile app development, and AI in IT.</li>
+                    <li class="animate-fade-in-up" style="animation-delay: 400ms;">To align with industry standards and global certification programs.</li>
+                </ul>
+            </div>
+
+            <!-- Faculty Content (Hidden by default) -->
+            <div id="about-faculty" class="about-sub-content hidden">
+                <h3 class="text-3xl font-bold text-red-700 mb-4 text-center animate-slide-in-top">Our Dedicated Faculty</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6" id="faculty-items">
+                    <!-- Faculty profiles -->
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Vilas-Gaikwad.jpg" alt="Dr. Vilas Shivaji Gaikwad" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=HOD';">
+                        <h3 class="text-2xl font-semibold text-red-700">Dr. Vilas Shivaji Gaikwad</h3>
+                        <p class="text-red-600 text-lg">Associate Professor & HoD</p>
+                        <p class="text-gray-700 text-sm">Qualification: PhD.(CSE), M.Tech(CSE), BE(CSE)</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 13 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: hodit.tcoer@kjei.edu.in</p>
+                    </div>
+
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Aarti-Kale.jpg" alt="Prof. Aarti Kale" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=AK';">
+                        <h3 class="text-2xl font-semibold text-red-700">Prof. Aarti Kale</h3>
+                        <p class="text-red-600 text-lg">Assistant Professor</p>
+                        <p class="text-gray-700 text-sm">Qualification: PhD Pursuing</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 12 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: aartikale.tcoer@kjei.edu.in</p>
+                    </div>
+
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Gajanan-A.jpg" alt="Prof. Gajanan A" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=GA';">
+                        <h3 class="text-2xl font-semibold text-red-700">Prof. Gajanan A</h3>
+                        <p class="text-red-600 text-lg">Assistant Professor</p>
+                        <p class="text-gray-700 text-sm">Qualification: M. Tech (CSE)</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 15 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: gajananarsalwad.tcoer@kjei.edu.in</p>
+                    </div>
+
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Pravin-Kamble.jpg" alt="Prof. Pravin R. Kamble" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=PK';">
+                        <h3 class="text-2xl font-semibold text-red-700">Prof. Pravin R. Kamble</h3>
+                        <p class="text-red-600 text-lg">Assistant Professor</p>
+                        <p class="text-gray-700 text-sm">Qualification: M.Tech (CSE), PhD (Pursuing)</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 12 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: pravinkamble.tcoer@kjei.edu.in</p>
+                    </div>
+
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Pravin-Patil.jpg" alt="Prof. Pravin S.Patil" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=PP';">
+                        <h3 class="text-2xl font-semibold text-red-700">Prof. Pravin S.Patil</h3>
+                        <p class="text-red-600 text-lg">Assistant Professor</p>
+                        <p class="text-gray-700 text-sm">Qualification: ME(CS) Ph.D(Pursuing)</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 9.3 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: pravinpatil.tcoer@kjei.edu.in</p>
+                    </div>
+
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Rahila-Sayeda.jpg" alt="Mrs. Rahila Sayeda" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=RS';">
+                        <h3 class="text-2xl font-semibold text-red-700">Mrs. Rahila Sayeda</h3>
+                        <p class="text-red-600 text-lg">Assistant Professor</p>
+                        <p class="text-gray-700 text-sm">Qualification: ME (COMP)</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 6 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: rahilasayeda.tcoer@kjei.edu.in</p>
+                    </div>
+
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 staff-item animate-scale-in">
+                        <img src="Unmesh-Barge.jpg" alt="Mr. Unmesh A. Barge" class="h-36 w-auto mx-auto mb-4 object-contain rounded-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=UB';">
+                        <h3 class="text-2xl font-semibold text-red-700">Mr. Unmesh A. Barge</h3>
+                        <p class="text-red-600 text-lg">Lab Assistant</p>
+                        <p class="text-gray-700 text-sm">Qualification: M. A.</p>
+                        <p class="text-gray-700 text-sm">Experience: Teaching: 13 Years</p>
+                        <p class="text-gray-700 text-sm break-all">Email: unmeshbarge.tcoer@kjei.edu.in</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Laboratories Content (Hidden by default) -->
+            <div id="about-laboratories" class="about-sub-content hidden">
+                <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left">Our Laboratories</h3>
+                <div class="text-lg text-gray-700 leading-relaxed space-y-4 mb-8">
+                    <p class="animate-fade-in-up">
+                        We offer state-of-the-art IT laboratories designed to replicate enterprise-grade environments. Labs include:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 animate-fade-in-up" style="animation-delay: 100ms;">
+                        <li>Networking & Security Lab: (CISCO Routers/Switches, Wireshark, Firewall simulation)</li>
+                        <li>Web & Application Development Lab</li>
+                        <li>Cloud & Virtualization Lab</li>
+                        <li>Database & Data Analytics Lab</li>
+                    </ul>
+                    <p class="animate-fade-in-up" style="animation-delay: 200ms;">
+                        Students gain exposure to real-world IT tools and platforms like AWS, Azure, SQL Server, Kali Linux, and more.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8" id="lab-items">
+                    <!-- Individual Lab Sections with Image Placeholders -->
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">Linux Lab</h3>
+                        <img src="it1.jpg" alt="Linux Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A60000/FFFFFF?text=Linux+Lab+Image';">
+                        <p class="text-gray-700 text-sm">Description of Linux Lab and its facilities.</p>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">Network Lab</h3>
+                        <img src="it2.jpg" alt="Network Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A60000/FFFFFF?text=Network+Lab+Image';">
+                        <p class="text-gray-700 text-sm">Description of Network Lab and its facilities.</p>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">Programming Lab II</h3>
+                        <img src="it3.jpg" alt="Programming Lab II" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A60000/FFFFFF?text=Programming+Lab+II+Image';">
+                        <p class="text-gray-700 text-sm">Description of Programming Lab II and its facilities.</p>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">Programming Lab III</h3>
+                        <img src="it4.jpg" alt="Programming Lab III" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A60000/FFFFFF?text=Programming+Lab+III+Image';">
+                        <p class="text-gray-700 text-sm">Description of Programming Lab III and its facilities.</p>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">IoT Lab</h3>
+                        <img src="it5.jpg" alt="IoT Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A60000/FFFFFF?text=IoT+Lab+Image';">
+                        <p class="text-gray-700 text-sm">Description of IoT Lab and its facilities.</p>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 lab-item animate-scale-in">
+                        <h3 class="text-2xl font-semibold text-red-700 mb-4">Project Lab</h3>
+                        <img src="it6.jpg" alt="Project Lab" class="w-full h-48 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/400x250/A60000/FFFFFF?text=Project+Lab+Image';">
+                        <p class="text-gray-700 text-sm">Description of Project Lab and its facilities.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- R&D Content (Hidden by default) -->
+            <div id="about-r-and-d" class="about-sub-content hidden">
+                <h3 class="text-3xl font-bold text-red-700 mb-4 animate-slide-in-left">Research & Publications</h3>
+                <div class="text-lg text-gray-700 leading-relaxed space-y-4">
+                    <p class="animate-fade-in-up">
+                        The department actively promotes research in domains like:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 ml-4 animate-fade-in-up" style="animation-delay: 100ms;">
+                        <li>Cloud Security</li>
+                        <li>Artificial Intelligence Applications in IT</li>
+                        <li>Internet of Things (IoT)</li>
+                        <li>Web 3.0 & Blockchain Solutions</li>
+                    </ul>
+                    <p class="animate-fade-in-up" style="animation-delay: 200ms;">
+                        Students and faculty regularly publish in IEEE, Springer, and UGC Care Journals, and participate in tech symposiums and coding fests.
+                    </p>
+
+                    <div class="overflow-x-auto mt-6 animate-fade-in-up" style="animation-delay: 300ms;">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
+                            <thead>
+                                <tr class="bg-red-600 text-white">
+                                    <th class="py-3 px-4 text-left border-b border-red-700 rounded-tl-lg">Sr. No.</th>
+                                    <th class="py-3 px-4 text-left border-b border-red-700">Title</th>
+                                    <th class="py-3 px-4 text-left border-b border-red-700">AY 2019-20</th>
+                                    <th class="py-3 px-4 text-left border-b border-red-700">AY 2020-21</th>
+                                    <th class="py-3 px-4 text-left border-b border-red-700">AY 2021-22</th>
+                                    <th class="py-3 px-4 text-left border-b border-red-700">AY 2022-23</th>
+                                    <th class="py-3 px-4 text-left border-b border-red-700 rounded-tr-lg">AY 2023-24</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="hover:bg-red-50 transition-colors duration-200">
+                                    <td class="py-3 px-4 border-b border-gray-200">1</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">Research Papers</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">10</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">13</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">21</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">23</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">26</td>
+                                </tr>
+                                <tr class="hover:bg-red-50 transition-colors duration-200">
+                                    <td class="py-3 px-4 border-b border-gray-200">2</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">Projects</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">14</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">18</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">16</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">18</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">19</td>
+                                </tr>
+                                <tr class="hover:bg-red-50 transition-colors duration-200">
+                                    <td class="py-3 px-4 border-b border-gray-200">3</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">Internships</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">21</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">24</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">45</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">65</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">70</td>
+                                </tr>
+                                <tr class="hover:bg-red-50 transition-colors duration-200">
+                                    <td class="py-3 px-4 border-b border-gray-200">4</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">FDP/Workshops/Seminars/Conferences Attended</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">24</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">32</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">49</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">56</td>
+                                    <td class="py-3 px-4 border-b border-gray-200">61</td>
+                                </tr>
+                                <tr class="hover:bg-red-50 transition-colors duration-200">
+                                    <td class="py-3 px-4">5</td>
+                                    <td class="py-3 px-4">FDP/Workshops/Seminars/Conferences Organized</td>
+                                    <td class="py-3 px-4">1</td>
+                                    <td class="py-3 px-4">2</td>
+                                    <td class="py-3 px-4">3</td>
+                                    <td class="py-3 px-4">3</td>
+                                    <td class="py-3 px-4">2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -347,7 +525,31 @@
         <section id="alumni-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
             <h2 class="text-4xl font-bold text-red-800 mb-6 text-center animate-slide-in-top">Our Esteemed Alumni</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="alumni-items">
-                
+                <!-- Alumni profiles will be dynamically animated by JS -->
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item animate-scale-in">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=AS" alt="Dr. Anya Sharma" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Dr. Anya Sharma</h3>
+                    <p class="text-red-600 text-lg">Cybersecurity Expert</p>
+                    <p class="text-gray-700 text-sm">Class of 2015</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=RP" alt="Mr. Rohan Patel" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Mr. Rohan Patel</h3>
+                    <p class="text-red-600 text-lg">Software Engineer, Google</p>
+                    <p class="text-gray-700 text-sm">Class of 2018</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=PS" alt="Ms. Priya Singh" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Ms. Priya Singh</h3>
+                    <p class="text-red-600 text-lg">Data Scientist, Microsoft</p>
+                    <p class="text-gray-700 text-sm">Class of 2017</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=VK" alt="Mr. Vikram Kumar" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Mr. Vikram Kumar</h3>
+                    <p class="text-red-600 text-lg">Network Architect, Cisco</p>
+                    <p class="text-gray-700 text-sm">Class of 2016</p>
+                </div>
             </div>
         </section>
 
@@ -751,6 +953,9 @@
                                 item.style.animationDelay = `${index * 100}ms`;
                             }, 10);
                         });
+                    } else if (pageId === 'about-page') { // Handle About sub-navigation
+                        // Default to showing the 'about-overview' tab when 'About Department' is clicked
+                        showAboutSubTab('about-overview');
                     }
 
                 }, 10); // Small delay to allow display:none to take effect before animation
@@ -786,7 +991,7 @@
             imagesContainer.innerHTML = ''; // Clear existing images
             event.images.forEach((imgSrc, index) => {
                 const imgDiv = document.createElement('div');
-                imgDiv.className = 'bg-red-100 rounded-lg overflow-hidden shadow-md animate-scale-in'; // Changed to red-100
+                imgDiv.className = 'bg-red-100 rounded-lg overflow-hidden shadow-md animate-scale-in';
                 imgDiv.style.animationDelay = `${index * 70}ms`; // Staggered animation for images
 
                 const img = document.createElement('img');
@@ -794,7 +999,7 @@
                 img.alt = event.title + ' Image ' + (index + 1);
                 // Adjusted classes for original proportion
                 img.className = 'w-full h-auto object-contain rounded-lg'; 
-                img.onerror = function() { this.onerror=null; this.src='https://placehold.co/400x300/A60000/FFFFFF?text=Image+Error'; }; // Changed placeholder color
+                img.onerror = function() { this.onerror=null; this.src='https://placehold.co/400x300/A60000/FFFFFF?text=Image+Error'; };
 
                 imgDiv.appendChild(img);
                 imagesContainer.appendChild(imgDiv);
@@ -811,6 +1016,42 @@
             });
         }
 
+        // Function to handle About Department sub-tab navigation
+        function showAboutSubTab(subTabId) {
+            // Hide all sub-content sections
+            const subContents = document.querySelectorAll('.about-sub-content');
+            subContents.forEach(content => {
+                content.style.display = 'none';
+                content.classList.remove('animate-fade-in'); // Remove to re-trigger
+            });
+
+            // Deactivate all sub-nav buttons
+            const subNavButtons = document.querySelectorAll('.about-sub-nav-item');
+            subNavButtons.forEach(button => {
+                button.classList.remove('active');
+                button.style.backgroundColor = '#f3f4f6'; /* gray-100 */
+                button.style.color = '#4b5563'; /* gray-700 */
+            });
+
+            // Show the selected sub-content
+            const activeSubContent = document.getElementById(subTabId);
+            if (activeSubContent) {
+                activeSubContent.style.display = 'block';
+                setTimeout(() => {
+                    activeSubContent.classList.add('animate-fade-in');
+                }, 10);
+            }
+
+            // Activate the corresponding sub-nav button
+            const activeSubButton = document.querySelector(`.about-sub-nav-item[data-target="${subTabId}"]`);
+            if (activeSubButton) {
+                activeSubButton.classList.add('active');
+                activeSubButton.style.backgroundColor = '#A60000'; /* Active red color */
+                activeSubButton.style.color = 'white';
+            }
+        }
+
+
         // Add event listeners to navigation buttons
         document.addEventListener('DOMContentLoaded', () => {
             // Get current year for footer
@@ -825,7 +1066,7 @@
             });
 
             // Add click listeners to individual event list items
-            const eventListItems = document.querySelectorAll('#past-events-list li'); // Only past-events-list now
+            const eventListItems = document.querySelectorAll('#past-events-list li');
             eventListItems.forEach((item) => {
                 item.addEventListener('click', (event) => {
                     const listItem = event.target.closest('li');
@@ -840,9 +1081,8 @@
             if (backButton) {
                 backButton.addEventListener('click', () => {
                     document.getElementById('event-detail-view').style.display = 'none';
-                    document.getElementById('event-list-view').style.display = 'grid'; // Show the grid layout for events
-                    // Re-apply animations to event list items when returning
-                    const currentEventListItems = document.querySelectorAll('#past-events-list li'); // Only past-events-list now
+                    document.getElementById('event-list-view').style.display = 'grid';
+                    const currentEventListItems = document.querySelectorAll('#past-events-list li');
                     currentEventListItems.forEach((item, index) => {
                         item.classList.remove('animate-scale-in');
                         setTimeout(() => {
@@ -852,6 +1092,14 @@
                     });
                 });
             }
+
+            // Add event listeners for About Department sub-tabs
+            const aboutSubNavButtons = document.querySelectorAll('.about-sub-nav-item');
+            aboutSubNavButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    showAboutSubTab(button.dataset.target);
+                });
+            });
 
             // Enquiry form submission and popup logic
             const enquirySubmitBtn = document.getElementById('enquiry-submit-btn');
