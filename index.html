@@ -554,7 +554,34 @@
         <!-- Alumni Page -->
         <section id="alumni-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
             <h2 class="text-4xl font-bold text-red-800 mb-6 text-center animate-slide-in-top">Our Esteemed Alumni</h2>
-            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="alumni-items">
+                <!-- Alumni profiles will be dynamically animated by JS -->
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item animate-scale-in">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=AS" alt="Dr. Anya Sharma" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Dr. Anya Sharma</h3>
+                    <p class="text-red-600 text-lg">Cybersecurity Expert</p>
+                    <p class="text-gray-700 text-sm">Class of 2015</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=RP" alt="Mr. Rohan Patel" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Mr. Rohan Patel</h3>
+                    <p class="text-red-600 text-lg">Software Engineer, Google</p>
+                    <p class="text-gray-700 text-sm">Class of 2018</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=PS" alt="Ms. Priya Singh" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Ms. Priya Singh</h3>
+                    <p class="text-red-600 text-lg">Data Scientist, Microsoft</p>
+                    <p class="text-gray-700 text-sm">Class of 2017</p>
+                </div>
+                <div class="bg-red-100 p-6 rounded-lg shadow-md text-center transform hover:scale-105 transition-transform duration-300 alumni-item">
+                    <img src="https://placehold.co/150x150/A60000/FFFFFF?text=VK" alt="Mr. Vikram Kumar" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-red-500" onerror="this.onerror=null;this.src='https://placehold.co/150x150/A60000/FFFFFF?text=Error';">
+                    <h3 class="text-2xl font-semibold text-red-700">Mr. Vikram Kumar</h3>
+                    <p class="text-red-600 text-lg">Network Architect, Cisco</p>
+                    <p class="text-gray-700 text-sm">Class of 2016</p>
+                </div>
+            </div>
+        </section>
 
         <!-- Newsletter Page (Placeholder) -->
         <section id="newsletter-page" class="page-content py-8 bg-white rounded-xl shadow-2xl p-6 animate-fade-in">
@@ -567,7 +594,7 @@
                 <p class="text-lg text-gray-700 leading-relaxed mb-4">
                     Download the official announcement letter below to see the full list of committee members and their roles.
                 </p>
-                <a src="team.pdf" download class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                <a href="team.pdf" download class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
                     Download Announcement (PDF)
                 </a>
             </div>
@@ -804,8 +831,7 @@
                 description: 'A vibrant welcome event for first-year students filled with fun, music, dance, and ice-breaking activities to foster camaraderie and college spirit.',
                 images: [
                     'F1.jpg',
-                    'F2.jpg',
-                    'F3.jpg'
+                    'F2.jpg'
                 ]
             },
             {
@@ -902,8 +928,8 @@
                 // Highlight the active navigation button
                 const activeButton = document.getElementById(`nav-${pageId.replace('-page', '')}`);
                 if (activeButton) {
-                    activeButton.classList.remove('text-red-100', 'hover:text-white', 'hover:bg-red-800');
-                    activeButton.classList.add('bg-red-600', 'text-white', 'shadow-md');
+                    activeButton.classList.remove('bg-red-600', 'text-white', 'shadow-md');
+                    activeButton.classList.add('text-red-100', 'hover:text-white', 'hover:bg-red-800');
                 }
             }
         }
@@ -1080,6 +1106,7 @@
             });
 
             // Add click listeners to individual event list items
+            // Corrected selector to only target list items within #past-events-list
             const eventListItems = document.querySelectorAll('#past-events-list li');
             eventListItems.forEach((item) => {
                 item.addEventListener('click', (event) => {
@@ -1096,6 +1123,7 @@
                 backButton.addEventListener('click', () => {
                     document.getElementById('event-detail-view').style.display = 'none';
                     document.getElementById('event-list-view').style.display = 'grid';
+                    // Corrected selector to only target list items within #past-events-list
                     const currentEventListItems = document.querySelectorAll('#past-events-list li');
                     currentEventListItems.forEach((item, index) => {
                         item.classList.remove('animate-scale-in');
@@ -1148,7 +1176,7 @@
 
                     console.log('Enquiry Submitted:', {
                         name: nameInput.value,
-                        email: emailInput.value,
+                        email: email.value, // Corrected from emailInput.value
                         mobile: mobileInput.value
                     });
 
